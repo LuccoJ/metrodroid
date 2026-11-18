@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  strings.xml
+
+  Copyright (C) 2013 Eric Butler
+
+  Authors:
+  Lauri Andler <lauri.andler@gmail.com>
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="directions">Napauta korttia.</string>
+    <string name="reading_card">Luetaan korttia</string>
+    <string name="dont_move">Älä liikuta korttia</string>
+    <string name="advanced_info">Tarkat tiedot</string>
+    <string name="delete_card">Poista kortti</string>
+    <string name="unknown_card">Tuntematon kortti</string>
+    <string name="hw_detail">Valmistajan tiedot</string>
+    <string name="data">Raakadata</string>
+    <string name="copy_xml">Kopioi</string>
+    <string name="share_xml">Jaa</string>
+    <string name="save_xml">Tallenna USB-muistille</string>
+    <string name="history">Historia</string>
+    <string name="no_trip_data">Ei löytynyt matkoja. Onko korttia käytetty?</string>
+    <string name="import_xml">Import</string>
+    <string name="import_clipboard">Importtaa leikepöydältä</string>
+    <string name="import_file">Importtaa tiedostosta</string>
+    <string name="export">Export</string>
+    <string name="export_all">Exporttaa kaikki</string>
+    <string name="about">Tietoja</string>
+    <string name="preferences">Asetukset</string>
+    <string name="accessibility">Helppokäyttöisyys</string>
+    <string name="speak_balance">Sano saldo</string>
+    <string name="speak_balance_summary"/>
+    <string name="balance_speech">Saldo <xliff:g id="saldo" esimerkki="$13.37">%s</xliff:g></string>
+    <string name="loading">Lataa…</string>
+    <string name="scanned_at_format">Scannattu %1$s klo %2$s</string>
+    <string name="supported_cards">Tuetut kortit</string>
+    <string name="nfc_off_error">NFC on pois päältä</string>
+    <string name="turn_on_nfc">Salli NFC:n käyttö jotta voin lukea kortin tiedot.</string>
+    <string name="unknown_card_description">Metrodroid ei vielä tue tätä korttia. Vain raakadata voidaan näyttää.</string>
+    <string name="hsl_balance_refill">Arvon lataus</string>
+    <string name="hsl_balance_ticket">Arvolippu</string>
+    <string name="hsl_pass_ticket">Kausilippu</string>
+    <string name="license">Lisenssit</string>
+    <string name="location_singapore">Singapore</string>
+    <string name="location_tokyo">Tokio, Japani</string>
+    <string name="location_kansai">Kansai, Japani</string>
+    <string name="location_the_netherlands">Alankomaat</string>
+    <string name="location_sao_paulo">São Paulo, Brasilia</string>
+    <string name="location_helsinki_finland">Helsinki, Suomi</string>
+    <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_hong_kong">Hong Kong</string>
+    <string name="location_shenzhen">Shenzhen, Kiina</string>
+    <string name="location_christchurch_nz">Christchurch, Uusi-Seelanti</string>
+    <string name="mode_bus">Bussi</string>
+    <string name="mode_train">Juna</string>
+    <string name="mode_tram">Raitiovaunu</string>
+    <string name="mode_metro">Metro</string>
+    <string name="mode_ferry">Lautta</string>
+    <string name="location_moscow">Moskova, Venäjä</string>
+    <string name="location_saint_petersburg">Pietari, Venäjä</string>
+    <string name="location_israel">Israel</string>
+    <string name="location_vancouver">Vancouver, BC, Kanada</string>
+    <string name="location_quebec">Québec, Kanada</string>
+    <string name="location_istanbul">Istanbul, Turkki</string>
+    <string name="location_ireland">Irlanti</string>
+    <string name="location_brussels">Bryssel, Belgia</string>
+    <string name="location_gironde">Gironde, Ranska</string>
+    <string name="location_grenoble">Grenoble, Ranska</string>
+    <string name="location_lisbon">Lissabon, Portugali</string>
+    <string name="location_milan">Milano, Italia</string>
+    <string name="location_paris">Pariisi, Ranska</string>
+    <string name="location_sophia_antipolis">Sophia Antipolis, Ranska</string>
+    <string name="location_montpellier">Montpellier, Ranska</string>
+    <string name="location_toulouse">Toulouse, Ranska</string>
+    <string name="location_beijing">Peking, Kiina</string>
+    <string name="location_wuhan">Wuhan, Kiina</string>
+    <string name="location_kiev">Kiova, Ukraina</string>
+    <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="location_taipei">Taipei</string>
+    <string name="location_france">Ranska</string>
+    <string name="location_russia">Venäjä</string>
+    <string name="location_krasnodar">Krasnodar, Venäjä</string>
+    <string name="location_denmark">Tanska</string>
+    <string name="location_stockholm">Tukholma, Ruotsi</string>
+    <string name="location_auckland">Auckland, Uusi-Seelanti</string>
+    <string name="location_waikato">Waikato, Uusi-Seelanti</string>
+    <string name="location_wellington_nz">Wellington, Uusi-Seelanti</string>
+    <string name="location_otago">Otago, Uusi-Seelanti</string>
+    <string name="location_rotorua">Rotorua, Uusi-Seelanti</string>
+    <string name="location_malaysia">Malesia</string>
+    <string name="location_samara">Samara, Venäjä</string>
+    <string name="location_venezia">Venetsia, Italia</string>
+    <string name="location_cadiz">Cádiz, Espanja</string>
+    <string name="location_tampere">Tampere, Suomi</string>
+    <string name="location_germany">Saksa</string>
+    <string name="location_germany_and_switzerland">Saksa ja Sveitsi</string>
+    <string name="location_pisa">Pisa, Italia</string>
+    <string name="location_kazan">Kazan, Venäjä</string>
+    <string name="location_shanghai">Shanghai, Kiina</string>
+    <string name="location_ekaterinburg">Jekaterinburg, Venäjä</string>
+    <string name="location_kirov">Kirov, Venäjä</string>
+    <string name="location_orenburg">Orenburg, Venäjä</string>
+    <string name="location_penza">Penza, Venäjä</string>
+    <string name="location_yoshkar_ola">Yoshkar-Ola, Venäjä</string>
+    <string name="location_barnaul">Barnaul, Venäjä</string>
+    <string name="location_warsaw">Varsova, Puola</string>
+    <string name="hsl_language">Kieli</string>
+    <string name="hsl_finnish">Suomi</string>
+    <string name="hsl_swedish">Ruotsi</string>
+    <string name="hsl_english">Englanti</string>
+    <string name="hsl_region_helsinki">Helsinki</string>
+    <string name="hsl_region_espoo">Espoo</string>
+    <string name="hsl_region_vantaa">Vantaa</string>
+    <string name="hsl_region_seutu">Seutu (HEL+ESP-VAN)</string>
+    <string name="hsl_region_kirkkonummi_siuntio">Kirkkonummi-Siuntio</string>
+    <string name="hsl_region_vihti">Vihti</string>
+    <string name="hsl_region_nurmijarvi">Nurmijärvi</string>
+    <string name="hsl_region_kerava_sipoo_tuusula">Kerava-Sipoo-Tuusula</string>
+    <string name="hsl_region_sipoo">Sipoo</string>
+    <string name="hsl_region_lahiseutu_2">Lähiseutu 2 (ESP+VAN+KIR+KER+SIP)</string>
+    <string name="hsl_region_lahiseutu_3">Lähiseutu 3 (HEL+ESP+VAN+KIR+KER+SIP)</string>
+    <string name="hsl_transport_bussi">Bussi</string>
+    <string name="hsl_transport_bussi_2">Bussi 2</string>
+    <string name="hsl_transport_bussi_3">Bussi 3</string>
+    <string name="hsl_transport_bussi_4">Bussi 4</string>
+    <string name="hsl_transport_raitiovaunu">Raitiovaunu</string>
+    <string name="hsl_transport_metro">Metro</string>
+    <string name="hsl_transport_juna">Juna</string>
+    <string name="hsl_transport_lautta">Lautta</string>
+    <string name="hsl_transport_u_linja">U-linja</string>
+    <string name="unauthorized_file_title_format">Tiedosto: %s (luvaton)</string>
+    <string name="copyright">Tekijänoikeus © 2015–2025 Michael Farrell</string>
+    <string name="last_refill">Viimeinen täyttö</string>
+    <string name="nfcv_system_info">Järjestelmätiedot</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip tallennettu USB-tallennustilaan.</string>
+    <string name="general">Yleinen</string>
+    <string name="time">Aika</string>
+    <string name="page_title_format_empty">Sivu: %s (tyhjä)</string>
+    <string name="block_title_format_unauthorized">Lohko: %s (luvaton)</string>
+    <string name="rejected">Hylätty</string>
+    <string name="subscription_cost">Kustannus</string>
+    <string name="date">Päivämäärä</string>
+    <string name="card_format">Kortin muoto</string>
+    <string name="binary_title_format">Binääritiedot</string>
+    <string name="valid_origin_destination_via">Voimassa %1$s:sta %2$s:een %3$s:n kautta</string>
+    <string name="keys_loaded">Tämän kortin salausavaimet on ladattu.</string>
+    <string name="nfc_settings">NFC-asetukset</string>
+    <string name="machine_id">Laitetunnus</string>
+    <string name="felica_system_title_format">Järjestelmä: %1$s (%2$s)</string>
+    <string name="application_title_format">Sovellus: %s</string>
+    <string name="unauthorized_page_title_format">Sivu: %s (luvaton)</string>
+    <string name="export_filename">Vie tiedoston nimi</string>
+    <string name="saved_xml_custom">XML tallennettu USB-tallennustilaan.</string>
+    <string name="unknown">Tuntematon</string>
+    <string name="page_title_format">Sivu: %s</string>
+    <string name="lawyercats">Metrodroid ja sen kirjoittajat eivät ole yhteydessä mihinkään julkisen liikenteen virastoon.</string>
+    <string name="unknown_more_info">Lisätietoja</string>
+    <string name="unknown_card_header">Ei tuettu korttimuotoa</string>
+    <string name="select_file">Valitse tiedosto</string>
+    <string name="copied_to_clipboard">Kopioitu leikepöydälle</string>
+    <string name="visit_website">Vieraile verkkosivustolla</string>
+    <string name="title_activity_about">Tietoja</string>
+    <string name="card_not_supported_on_device">Laitteesi ei tue tätä korttia.</string>
+    <string name="need_stations">Joidenkin asemien nimiä ovat tuntemattomia.</string>
+    <string name="need_stations_submit">Ilmoita</string>
+    <string name="card_epoch">Kortin aikakausi</string>
+    <string name="transaction_type">Tapahtumatyyppi</string>
+    <string name="last_transaction">Viimeisin tapahtuma</string>
+    <string name="launch_from_background">Käynnistä taustalta</string>
+    <string name="checksum">Tarkistussumma</string>
+    <string name="no_keys">Ei avaimia.</string>
+    <string name="delete">Poista</string>
+    <string name="unknown_format">Tuntematon (%s)</string>
+    <string name="load_keys">Lataa avaimet</string>
+    <string name="valid_format">Voimassa %1$s–%2$s</string>
+    <string name="valid_from_format">Voimassa %1$s alkaen</string>
+    <string name="machine_id_format">Laitetunnus %s</string>
+    <string name="file_exported">Tiedosto viety.</string>
+    <string name="delete_key_confirm_title">Poistetaanko avain todella?</string>
+    <string name="transaction_counter">Tapahtumalaskuri</string>
+    <string name="info">Tiedot</string>
+    <string name="invalid_sector_title_format">Sektori: %1$s (virheellinen: %2$s)</string>
+    <string name="sector_title_format">Sektori: %s</string>
+    <string name="block_title_format">Lohko: %s</string>
+    <string name="no_scanned_cards">Et ole skannatnut yhtään korttia.</string>
+    <string name="scanned_cards">Historia</string>
+    <string name="fully_locked_title">Täysin lukittu kortti.</string>
+    <string name="title_activity_license">Avoimen lähdekoodin lisenssit</string>
+    <string name="never">Ei koskaan</string>
+    <string name="add_key">Lisää avain</string>
+    <string name="keys">Avaimet</string>
+    <string name="cant_delete_with_obfuscation">Avaimien poistaminen ei ole tällä hetkellä käytettävissä</string>
+    <string name="delete_key_confirm_message">Avaintiedosto <xliff:g id="kuvaus" example="a1b2c3d4">%1$s</xliff:g> (sisältää <xliff:g id="key_type" example="1 MIFARE Classic -avain">%2$s</xliff:g>) on poissa ikuisesti.</string>
+    <string name="sector_title_format_empty">Sektori: %s (tyhjä)</string>
+    <string name="card_keys_not_supported">Metrodroid ei tue avaimia tämän tyyppisille korteille.</string>
+    <string name="fully_locked_desc_unlockable">Mikään tämän kortin osa ei ole vapaasti luettavissa ilman avainta. Sinulle ei ole asennettu kelvollisia avaimia.\n\nKortti toimii, kun siihen on asennettu avaimet. Nämä ovat yleensä erilaisia kullekin kortille. Lisätietoja avainten hankinnasta ja asentamisesta löytyy dokumentaatiosta.\n\nOta kortinmyöntäjään yhteyttä, jotta myönnettyjen korttien tietoihin pääsee vapaasti. Nykyaikaisella älykorttitekniikalla on turvallista sallia avoin, vain luku -käyttöoikeus. Jotkut virastot tarjoavat jopa avoimen dokumentaation tietomuodosta!</string>
+    <string name="fully_locked_desc">Mikään tämän kortin osa ei ole vapaasti luettavissa ilman avainta, eikä tällä muodolla ole tällä hetkellä käytännön haavoittuvuuksia.\n\n Metrodroid ei tue korttiasi, ja on epätodennäköistä, että se tulee koskaan olemaan, ellei sen avainta ole purettu.\n\n Ota kortinmyöntäjään yhteyttä, jotta myönnettyjen korttien tietoihin pääsee vapaasti. Nykyaikaisella älykorttitekniikalla on turvallista sallia avoin, vain luku -käyttöoikeus. Jotkut virastot tarjoavat jopa avoimen dokumentaation tietomuodosta!</string>
+    <string name="unknown_more_info_desc">Napauta saadaksesi lisätietoja Metrodroid-tuesta tälle kortille.</string>
+    <string name="valid_origin_destination">Voimassa %1$s:sta %2$s:een</string>
+    <string name="keys_required">Salausavaimia edellytetään tämän kortin lukemiseksi.</string>
+    <string name="file_title_format">Tiedosto: %s</string>
+    <string name="invalid_file_title_format">Tiedosto: %1$s (virheellinen: %2$s)</string>
+    <string name="valid_to_format">Voimassa %1$s asti</string>
+    <string name="cant_delete_with_obfuscation_message">Turvallisuussyistä et voi poistaa avaimia, kun korttinumeroiden hämärtäminen on käytössä. Sammuta se, jos haluat poistaa avaimia.</string>
+    <string name="unauthorized_sector_title_format">Sektori: %s (luvaton)</string>
+    <string name="felica_service_title_format">Palvelu: %1$s (%2$s)</string>
+    <string name="record_title_format">Tietue: %s</string>
+    <string name="card_preview_reader">Kortinlukijan beta-versio.</string>
+    <string name="error">Virhe</string>
+    <string name="nfc_unavailable">NFC ei saatavilla</string>
+    <string name="vehicle_type">Ajoneuvon tyyppi</string>
+    <string name="add_key_directions">Tallenna avaimistasi binäärivedos tiedostoksi laajennuksella .farebotkeys, lähetä se sähköpostitse liitteenä itsellesi ja avaa se sitten tällä laitteella.</string>
+</resources>

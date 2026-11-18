@@ -1,0 +1,11 @@
+theme: jekyll-theme-cayman
+
+exclude:
+- ".gitignore"
+- CNAME
+- README.md
+
+plugins:
+- jemoji
+- jekyll-redirect-from
+

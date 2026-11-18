@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+}
+
+task colouriseIcons(type: Copy) {
+    from 'icons/'
+    into 'build/generated/icons/drawable'
+    includeEmptyDirs false
+    eachFile { it.path = 'material_' + (name.replaceAll('_black_24dp.xml', '_24dp.xml')) }
+    filter { line -> line.replaceAll(/android:fillColor="#(FF)?(0[01]){3}"/, 'android:fillColor="?android:attr/textColorPrimary"')}
+
+    // Explicitly declare each icon we want to use
+    include ([
+            'person',
+            'group',
+            'add',
+            'save',
+            'delete',
+            'transfer_within_a_station',
+            'error',
+            'search'
+    ].collect { r ->
+        '**/drawable-anydpi-v21/ic_' + r + '_black_24dp.xml'
+    })
+}
+
+android {
+    namespace "com.google.material_design_icons"
+    compileSdkVersion android_sdk_version
+    buildToolsVersion build_version
+
+    defaultConfig {
+        minSdkVersion android_min_version
+        targetSdkVersion android_sdk_version
+        vectorDrawables {
+            useSupportLibrary = true
+            generatedDensities = []
+        }
+    }
+
+    preBuild.dependsOn colouriseIcons
+    sourceSets.main.res.srcDirs = ['build/generated/icons']
+
+    lintOptions {
+        // We actually support these attributes in older API versions, with the support library.
+        abortOnError false
+        disable 'NewApi'
+    }
+}
+
+// Activate reproducible archives
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}

@@ -1,0 +1,13 @@
+rootProject.name = 'metrodroid'
+include ':lintchecks'
+include 'leaflet'
+project(':leaflet').projectDir = new File('third_party/leaflet')
+include 'material-design-icons'
+project(':material-design-icons').projectDir = new File('third_party/material-design-icons')
+include ':jvmcli'
+include ':proto'
+includeBuild('third_party/kotlin-pcsc') {
+    dependencySubstitution {
+        substitute module('au.id.micolous:kotlin-pcsc') using project(':')
+    }
+}

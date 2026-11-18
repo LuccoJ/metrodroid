@@ -1,0 +1,23 @@
+[submodule "third_party/vpereira_bilhete"]
+	path = third_party/vpereira_bilhete
+	url = https://github.com/vpereira/bilhete.git
+	shallow = true
+[submodule "third_party/material-design-icons/icons"]
+	path = third_party/material-design-icons/icons
+	url = https://github.com/google/material-design-icons.git
+	shallow = true
+[submodule "third_party/ovc-tools"]
+	path = third_party/ovc-tools
+	url = https://github.com/wandcode/ovc-tools
+	shallow = true
+[submodule "third_party/RejsekortReader"]
+	path = third_party/RejsekortReader
+	url = https://github.com/mchro/RejsekortReader.git
+	shallow = true
+[submodule "third_party/protobuf"]
+	path = third_party/protobuf
+	url = https://github.com/protocolbuffers/protobuf.git
+	shallow = true
+[submodule "third_party/kotlin-pcsc"]
+	path = third_party/kotlin-pcsc
+	url = https://github.com/micolous/kotlin-pcsc.git

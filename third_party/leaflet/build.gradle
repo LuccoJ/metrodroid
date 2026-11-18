@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+}
+
+task copyLeaflet(type: Copy) {
+    from './'
+    into 'build/assets/third_party/leaflet'
+    include ([
+            'LICENSE-prefix',
+            'LICENSE',
+            'leaflet.css',
+            'leaflet.js',
+            // 'images/layers-2x.png',
+            // 'images/layers.png',
+            // 'images/marker-icon-2x.png',
+            // 'images/marker-icon.png',
+            'images/marker-shadow.png',
+    ])
+}
+
+android {
+    namespace "com.leafletjs.leaflet"
+
+    compileSdkVersion android_sdk_version
+    buildToolsVersion build_version
+
+    defaultConfig {
+        minSdkVersion android_min_version
+        targetSdkVersion android_sdk_version
+    }
+
+    preBuild.dependsOn copyLeaflet
+    sourceSets.main.assets.srcDirs = ['build/assets/']
+}
+
+// Activate reproducible archives
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}

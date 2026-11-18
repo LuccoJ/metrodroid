@@ -1,0 +1,31 @@
+# -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
+.PHONY:: mdst_clean mdst_proto mdst clean copy %.copy
+MDST = $(MDROOT)/extra/mdst
+
+mdst_sources := $(wildcard $(MDST)/*.py)
+
+# Builds the python proto definitions.
+$(MDST)/stations_pb2.py: $(MDST)/stations.proto
+	make -C $(MDST) stations_pb2.py
+
+# Used to declare a dependency on the MdST library.
+# This will make all targets rebuild if the library has changed.
+mdst: $(MDST)/stations_pb2.py $(mdst_sources)
+
+# Dumps a CSV file from a MdST file.
+%.csv: %.mdst mdst
+	python3 $(MDST)/dump2csv.py -o $@ $<
+
+# Copies a MdST file in place.
+%.copy: %.mdst mdst
+	cp $< $(MDROOT)/mdst/
+
+# Deletes the generated Python proto definitions.
+mdst_clean:
+	make -C $(MDST) clean
+
+# Checks the sha512sums
+define sha512
+	rm -f $@
+	shasum -wa 512 -c $< && touch $@
+endef

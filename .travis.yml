@@ -1,0 +1,122 @@
+sudo: required
+dist: bionic
+language: java
+# Android pins asm-6.0 for desugar, which doesn't support Java 10
+# Travis' Bionic image doesn't support OpenJDK 8 (despite docs claiming so)
+jdk: openjdk9
+
+env:
+  global:
+    # Android SDK tools package to use
+    - ANDROID_SDK_URL=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+    - ANDROID_SDK_SHA256=92ffee5a1d98d856634e8b71132e8a95d96c83a63fde1099be3d86df3106def9
+
+    # Android compile targets
+    - ANDROID_API=29
+    - ANDROID_BUILD_TOOLS=29.0.0
+
+    # Emulator
+    - EMULATOR_FLAVOUR=default
+
+    # These are all constants -- you shouldn't need to update these.
+    - ANDROID_SDK_ROOT=$HOME/android-sdk
+    - ADB=$ANDROID_SDK_ROOT/platform-tools/adb
+    - AVDMANAGER=$ANDROID_SDK_ROOT/tools/bin/avdmanager
+    - SDKMANAGER=$ANDROID_SDK_ROOT/tools/bin/sdkmanager
+    - EMULATOR=$ANDROID_SDK_ROOT/emulator/emulator
+
+    # Pointless in CI.
+    - QEMU_AUDIO_DRV=none
+
+    # Work around avdmanager and sdkmanager requiring Java EE components
+    # https://issuetracker.google.com/issues/67495440
+    - AVDMANAGER_OPTS="--add-modules java.se.ee"
+    - SDKMANAGER_OPTS="--add-modules java.se.ee"
+
+    # Limit RAM usage. Travis has a 4GB limit, we tend to flake otherwise.
+    - JVM_OPTS="-Xms1536M -Xmx1536M -XX:MaxMetaspaceSize=768M -XX:+HeapDumpOnOutOfMemoryError"
+
+jobs:
+  include:
+    # This only runs "assemble", which compiles the code and runs non-Android unit tests. This is
+    # normally fast -- and allows quick feedback in case of compiler errors (before running the
+    # more expensive test cases).
+    #
+    # This is run in parallel (debug + dev + release)
+    - stage: assemble and unit test
+      env: TARGET=jvm
+      script:
+        - ./gradlew :jvmcli:installShadowDist jvmCliTest --stacktrace
+        - ./.travis/jvmcli_test.sh
+    - env: TARGET=android
+      script: ./gradlew assembleDebug lintDebug testDebugUnitTest --stacktrace -PLINT_FATAL=1
+    - env: TARGET=android
+      script: ./gradlew assembleDev lintDev testDevUnitTest --stacktrace -PLINT_FATAL=1
+    - env: TARGET=android
+      script: ./gradlew assembleRelease lintRelease testReleaseUnitTest --stacktrace -PLINT_FATAL=1
+    # This runs a build where third_party/protobuf has been deleted because F-Droid
+    # https://github.com/metrodroid/metrodroid/issues/640#issuecomment-574491810
+    - env: TARGET=android
+      script:
+        - rm -rf ./third_party/protobuf
+        - ./gradlew assembleRelease lintRelease testReleaseUnitTest --stacktrace -PLINT_FATAL=1
+
+    # This runs the full test suite, including using the Android emulator.
+    - stage: test
+      env: EMULATOR_API=16 EMULATOR_ARCH=armeabi-v7a
+    - env: EMULATOR_API=16 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=18 EMULATOR_ARCH=armeabi-v7a
+    # Disabled due to https://issuetracker.google.com/issues/134845202
+    # - env: EMULATOR_API=21
+    - env: EMULATOR_API=21 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=23 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=24 EMULATOR_ARCH=armeabi-v7a
+    - env: EMULATOR_API=24 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=27 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=28 EMULATOR_ARCH=x86
+
+  allow_failures:
+    # These flake on Travis
+    - env: EMULATOR_API=27 EMULATOR_ARCH=x86
+    - env: EMULATOR_API=28 EMULATOR_ARCH=x86
+
+before_install:
+  - travis_retry sudo apt-get update
+  # qemu-system-armel: libpulse0
+  - travis_retry sudo apt-get install -y libpulse0
+
+install:
+  - travis_retry ./.travis/install_android_sdk.sh
+  - travis_retry ./.travis/install_android_emulator.sh
+
+script:
+  - ./gradlew :assembleAndroidTest
+  - ./.travis/start_android_emulator.sh || travis_terminate 1
+  - ./gradlew :connectedAndroidTest
+
+after_failure:
+  - uname -a || true
+  - lscpu || true
+  - free -m || true
+  - ps faux || true
+
+before_cache:
+  - ./gradlew --stop
+
+  # Gradle, general files
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/journal-1/
+  # Appears non-hermetic
+  - rm -f  $HOME/.gradle/caches/transforms-2/files-2.1/*/android.jar
+
+  # Gradle, version-specific files
+  - rm -fr $HOME/.gradle/caches/*/executionHistory/
+  - rm -fr $HOME/.gradle/caches/*/fileHashes/
+  - rm -f  $HOME/.gradle/caches/*/javaCompile/javaCompile.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache

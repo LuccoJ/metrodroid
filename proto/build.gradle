@@ -1,0 +1,160 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.google.protobuf:protobuf-gradle-plugin:$protobuf_gradle_version"
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'objective-c'
+
+protobuf {
+    protoc {
+        // You still need protoc like in the non-Android case
+        artifact = "com.google.protobuf:protoc:$protobuf_version"
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option "lite"
+                }
+            }
+            task.plugins {
+                objc {}
+            }
+        }
+    }
+}
+
+final def isArm64Host = "uname -m".execute().text.trim() == "arm64"
+final def isPhone = System.getenv('SDK_NAME')?.startsWith("iphoneos")
+final def iOSTarget = isPhone ? "ios_arm64" : (isArm64Host ? "ios_simulator_arm64" : "ios_x86_64")
+
+dependencies {
+    implementation "com.google.protobuf:protobuf-javalite:$protobuf_version"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.register('generateProtoWrapper') {
+    ext {
+        sourceDir = new File(buildDir, 'generated/source/proto/main/objc')
+        headerDir = sourceDir
+    }
+    dependsOn 'generateProto'
+}
+
+model {
+    toolChains {
+        clang(Clang) {
+            target("ios_arm64") {
+                objcCompiler.withArguments { args ->
+                    args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'arm64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'arm64'
+                }
+            }
+            target("ios_simulator_arm64") {
+                objcCompiler.withArguments { args ->
+                    args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'arm64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-mios-simulator-version-min=8.0'
+                    args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'arm64'
+                }
+            }
+            target("ios_x86_64") {
+                objcCompiler.withArguments { args ->
+                    args << '-fembed-bitcode'
+                    args << '-arch'
+                    args << 'x86_64'
+                    args << '-m64'
+                    args << '-DNS_FORMAT_ARGUMENT(A)='
+                    args << '-mios-simulator-version-min=8.0'
+                    args << '-D_Nullable_result=_Nullable'
+                }
+                linker.withArguments { args ->
+                    args << '-arch'
+                    args << 'x86_64'
+                }
+            }
+        }
+    }
+    platforms {
+        ios_arm64 {
+            architecture "arm64"
+        }
+        ios_simulator_arm64 {
+            architecture "arm64"
+        }
+        ios_x86_64 {
+            architecture "x86_64"
+        }
+    }
+    components {
+        main(NativeLibrarySpec) {
+            targetPlatform iOSTarget
+            sources {
+                objc {
+                    source {
+                        srcDirs new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                        include "GPBProtocolBuffers.m", "Stations.pbobjc.m"
+                        generatedBy generateProtoWrapper
+                    }
+                    exportedHeaders {
+                        srcDirs new File (rootProject.projectDir, '/third_party/protobuf/objectivec')
+                    }
+                }
+            }
+        }
+    }
+    binaries {
+        withType(SharedLibraryBinarySpec) {
+            objcCompiler.args '-fno-objc-arc'
+            linker.args '-fno-objc-arc', '-framework', 'CoreServices', '-framework', 'Foundation'
+        }
+        withType(StaticLibraryBinarySpec) {
+            objcCompiler.args '-fno-objc-arc'
+            linker.args '-fno-objc-arc', '-framework', 'CoreServices', '-framework', 'Foundation'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
+}

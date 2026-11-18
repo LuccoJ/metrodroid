@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  themes.xml
+  This file is part of Metrodroid.
+  Copyright (C) 2017 Eric Butler <eric@codebutler.com>
+  Copyright (C) 2018 Google
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!-- Lint gets confused by theme definitions. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateDefinition">
+    <color name="Metrodroid.Dark.CardIdTextColor">#ffcc44</color>
+
+    <style name="Metrodroid.Dark" parent="@style/Theme.MaterialComponents">
+        <item name="colorPrimary">#338855</item>
+        <item name="colorPrimaryDark">#224422</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Dark.CardIdTextColor</item>
+        <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_dark</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_dark</item>
+    </style>
+
+    <integer-array name="Metrodroid.Dark.TransportIcons" >
+        <item>@drawable/bus</item>
+        <item>@drawable/train</item>
+        <item>@drawable/tram</item>
+        <item>@drawable/metro</item>
+        <item>@drawable/ferry</item>
+        <item>@drawable/tvm</item>
+        <item>@drawable/vending_machine</item>
+        <!-- TODO: Handle currencies other than Yen
+             This is only used by Edy and Suica at present. -->
+        <item>@drawable/cashier_yen</item>
+        <item>@drawable/unknown</item>
+        <item>@drawable/banned</item>
+        <item>@drawable/trolleybus</item>
+        <item>@drawable/car</item>
+        <item>@drawable/monorail</item>
+        <item>@drawable/cablecar</item>
+    </integer-array>
+
+    <color name="Metrodroid.Light.CardIdTextColor">#bb5500</color>
+
+    <style name="Metrodroid.Light" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#44ff99</item>
+        <item name="colorPrimaryDark">#33bb66</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Light</item>
+        <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Light.CardIdTextColor</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
+    </style>
+
+    <integer-array name="Metrodroid.Light.TransportIcons" >
+        <item>@drawable/bus</item>
+        <item>@drawable/train</item>
+        <item>@drawable/tram</item>
+        <item>@drawable/metro</item>
+        <item>@drawable/ferry</item>
+        <item>@drawable/tvm_black</item>
+        <item>@drawable/vending_machine_black</item>
+        <!-- TODO: Handle currencies other than Yen
+                This is only used by Edy and Suica at present. -->
+        <item>@drawable/cashier_yen</item>
+        <item>@drawable/unknown_black</item>
+    	<item>@drawable/banned</item>
+        <item>@drawable/trolleybus</item>
+        <item>@drawable/car</item>
+        <item>@drawable/monorail</item>
+        <item>@drawable/cablecar</item>
+    </integer-array>
+
+    <color name="FareBot.Theme.CardIdTextColor">#bb5500</color>
+
+    <style name="FareBot.Theme.Base" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
+        <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar</item>
+        <item name="actionBarStyle">@style/FareBot.Theme.ActionBar</item>
+        <item name="android:actionBarDivider">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="ButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="LockImageUnlocked">@drawable/unlocked</item>
+        <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
+        <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
+        <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>
+        <item name="android:listSeparatorTextViewStyle">@style/FareBot.Theme.Common.TextViewListSeparator</item>
+    </style>
+
+    <style name="FareBot.Theme.Common.TextViewListSeparator">
+      <item name="android:background">@android:color/transparent</item>
+      <item name="android:layout_width">fill_parent</item>
+      <item name="android:layout_height">wrap_content</item>
+      <item name="android:textStyle">bold</item>
+      <item name="android:textColor">?android:attr/textColorSecondary</item>
+      <item name="android:textSize">14sp</item>
+      <item name="android:gravity">center_vertical</item>
+      <item name="android:paddingTop">8dip</item>
+      <item name="android:paddingStart">8dip</item>
+      <item name="android:textColor">@color/FareBot.Theme.HeaderColor</item>
+
+      <item name="background">@android:color/transparent</item>
+      <item name="paddingStart">8dip</item>
+
+      <item name="android:paddingBottom">2dip</item>
+      <item name="android:paddingLeft">5dip</item>
+    </style>
+
+    <style name="FareBot.Theme.Main" parent="@style/FareBot.Theme.Base">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarDivider">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
+        <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar.Main</item>
+        <item name="actionBarStyle">@style/FareBot.Theme.ActionBar.Main</item>
+        <item name="android:actionBarDivider">@android:color/transparent</item>
+        <item name="actionBarDivider">@android:color/transparent</item>
+    </style>
+
+    <style name="FareBot.Theme.Common" parent="@style/FareBot.Theme.Base">
+        <item name="MainActivityTheme">@style/FareBot.Theme.Main</item>
+    </style>
+
+    <style name="FareBot.Theme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
+        <item name="android:background">@color/FareBot.Theme.HeaderBackgroundColor</item>
+        <item name="android:titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
+        <item name="titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
+        <item name="background">@color/FareBot.Theme.HeaderBackgroundColor</item>
+        <item name="titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="FareBot.Theme.ActionBar.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+      <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="FareBot.Theme.ActionBar.Main" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+      <item name="android:actionBarDivider">@android:color/transparent</item>
+      <item name="actionBarDivider">@android:color/transparent</item>
+      <item name="android:background">@android:color/transparent</item>
+      <item name="background">@android:color/transparent</item>
+    </style>
+
+    <color name="FareBot.Theme.WindowBackground">#eeeeee</color>
+    <color name="FareBot.Theme.HeaderColor">#006D8F</color>
+    <color name="FareBot.Theme.HeaderBackgroundColor">#00ACC1</color>
+    <integer-array name="FareBot.Theme.TransportIcons" >
+        <item>@drawable/ic_transaction_bus_32dp</item>
+        <item>@drawable/ic_transaction_train_32dp</item>
+        <item>@drawable/ic_transaction_tram_32dp</item>
+        <item>@drawable/ic_transaction_metro_32dp</item>
+        <item>@drawable/ic_transaction_ferry_32dp</item>
+        <item>@drawable/ic_transaction_tvm_32dp</item>
+        <item>@drawable/ic_transaction_vend_32dp</item>
+        <item>@drawable/ic_transaction_pos_32dp</item>
+        <item>@drawable/ic_transaction_unknown_32dp</item>
+        <item>@drawable/ic_transaction_banned_32dp</item>
+        <!-- TODO: Add trolleybus icon -->
+        <item>@drawable/ic_transaction_bus_32dp</item>
+        <!-- TODO: Add car icon -->
+        <item>@drawable/ic_transaction_unknown_32dp</item>
+        <!-- TODO: Add monorail icon -->
+        <item>@drawable/ic_transaction_train_32dp</item>
+        <!-- TODO: Add cablecar icon -->
+        <item>@drawable/ic_transaction_unknown_32dp</item>
+    </integer-array>
+</resources>

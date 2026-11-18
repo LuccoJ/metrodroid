@@ -1,0 +1,235 @@
+# About this mapping file
+
+## Rebuilding the database
+
+If you want to add additional stations, you'll need to edit `mapping.csv` and then run `make`.
+
+You can verify the presence of stations in `seq_go.csv`.
+
+You can copy the MdST into the assets directory with `make copy`.
+
+## About the data source
+
+The [upstream GTFS data][0] is licensed under the [CC BY 4.0 AU license][1], provided by the
+[Queensland Department of Transport and Main Roads][2].
+
+## Getting stop IDs
+
+The goal is to get the most granular information possible for matching stop IDs. Generally speaking,
+this means the interpretation should match _the vending machines_.
+
+_Bus stop IDs are different_ on the Go card and GTFS data for stops on each side of the road, and
+generally also different for each platform at a bus interchange or busway station. Don't use
+`place_*` for anything but train stations.
+
+_All bus events_ use a combination of GPS and driver interaction in order to select the current
+stop. As a result, some information may be recorded incorrectly (if it has been locked on to a
+different stop, or the card was tapped off _before_ the bus stopped).
+
+_All top-up events_ (AVVM) use a different set of IDs. No attempt has been made at these yet.
+
+### Vending machines (best)
+
+_Go card vending machines_ are best source of data, but only show the last _10 tap events_ (there
+are 12 on the card).
+
+On vending machines, a typical trip looks like this:
+
+> 31/12/16 12:10 pm Location: Roma St Bus Station (SEB IB Services) \[10794\]
+>
+> Touch Off: $ 2.70
+>
+> 31/12/16 12:00 pm Location: South Bank busway station Platform 1 \[19052\]
+>
+> Touch On
+
+The bus stop names are different again (from GTFS and Go card website data), but the Stop ID (used
+in GTFS) is shown in square brackets, with some caveats:
+
+* The GTFS stop ID needs to be padded with leading zeros to 6 digits, eg: `10794` becomes `010794`.
+* Sometimes the stop IDs shown have a suffix separated by a dash, eg: `12345-2`. When present, omit
+  the suffix, but put it in the note column.
+
+For this trip, the corresponding rows to be added to `mapping.csv` are:
+
+mapping.csv row   | GTFS stop name
+----------------- | --------------
+`0x3d29,010794,,` | [Roma Street busway](https://jp.translink.com.au/plan-your-journey/stops/010794)
+`0x1dcc,019052,,` | [South Bank busway, platform 1](https://jp.translink.com.au/plan-your-journey/stops/019052)
+
+### Go card website
+
+The _[Go card website][goweb]_ shows _some_ data on registered cards, which is good enough for train
+stations _only_.  It has some problems for bus stops:
+
+* the bus stop ID is not shown
+* the bus stop names don't exactly match GTFS data
+
+## Pattern notes
+
+Go card timeline:
+
+* 2003: Contract awarded
+* 2005-07-14: First phase field test pilot:
+  * 5 QR stations:
+    * Petrie (Caboolture line)
+    * Sandgate (Shorncliffe line)
+    * Brunswick Street (now Fortitude Valley)
+    * Central
+    * Roma Street
+  * 1 private bus operator in Redcliffe
+* 2005-08-11: Cubic's PR about first phase field test
+* 2005-09: Second phase pilot?
+* 2006: Planned launch date (as at 2005-08-11)
+
+### Train
+
+The rail lines appear to mostly be in line order (map: [2016][map16], [2018][map18]):
+
+* Stop IDs <= 0x16 appear in an arbitrary order -- these were probably used as test stations
+
+* Stop ID 0x35 is Milton. There isn't enough space before Bowen Hills (0x3a) for the rest of the
+  Ipswitch/Rosewood line, so Rosewood might start at 0x19.
+
+* Stop IDs 0x3a - 0x40 are Bowen Hills to Northgate.
+
+* There's no neatly-fitting line for 0x41 - 0x55, so no guesses made there.
+
+* Stop IDs 0x56 - 0x6c are the Beenleigh line.
+
+* Gold Coast line stations might be >= 0x6d (likely excluding Varsity Lakes), but there's a pretty large gap before Cleveland line.
+
+* Stop IDs 0x7f - 0x89 may be the Ferny Grove line, but this doesn't appear in order (see below).
+
+* Stop IDs 0xaa - 0xbb are the Cleveland line.
+
+#### Station closures
+
+There haven't been any permanent train station closures since Go card was rolled out.
+
+#### New stations
+
+Rail network additions since Go card rolled out (2008):
+
+* 2009-12-13: Varsity Lakes station opened.
+
+* 2013-12: Springfield line (Darra - Springfield Central) opened.
+
+* 2016-10-04: Redcliffe Peninsula line (Petrie - Kippa-Ring) opened.
+
+#### Ideal stations to collect
+
+* To improve confidence in Beenleigh/Gold Coast line:
+
+  * Beenleigh (would confirm line theory)
+  * Ormeau
+  * Robina
+  * Varsity Lakes
+
+* To improve confidence in Cleveland line:
+
+  * Buranda
+  * Cleveland
+
+* To attempt Doomben line:
+
+  * Eagle Junction
+  * Clayfield
+  * Doomben
+
+* To attempt Shorncliffe line:
+
+  * Northgate
+  * Bindha
+  * Shorncliffe
+
+* To attempt Redcliffe Peninsula line:
+
+  * Northgate
+  * Virginia
+  * Petrie
+  * Kallangur
+  * Kippa-Ring
+
+* To attempt Caboolture / Sunshine Coast lines:
+
+  * Northgate
+  * Virginia
+  * Caboolture
+  * Nambour
+  * Gympie North
+
+* Ferny Grove line appears non-contiguous.  Winsdor = 0x7f, Gaythorne = 0x83; 3 IDs between them, when there are 4 stations.  Will need to do the remainder of the whole line:
+
+  * Wilston
+  * Newmarket
+  * Alderley
+  * Enoggera
+  * Mitchelton
+  * Oxford Park
+  * Grovely
+  * Keperra
+  * Ferny Grove
+
+* To attempt Springfield / Ipswitch / Rosewood lines:
+
+  * Darra
+  * Wacol
+  * Richlands
+  * Springfield Central
+  * Ipswitch
+  * Rosewood
+
+### Tram / G:link
+
+Likely sequential; appears to be reverse of GTFS ordering.
+
+Only stage 1 (Broadbeach South - Gold Coast University Hospital) of the line has been entered as "unconfirmed".
+
+We always use the south-bound stops (which have lower stop IDs), because `stops.txt` doesn't have a parent station (like trains), and _some_ of the stops have island platforms (where readers from either direction could be used).
+
+### Buses
+
+Bus lines are partly sequential, but lots of stops have been added and removed over time. Some
+reader IDs appear to be out-of-sequence with Stop Codes.
+
+There is [historical GTFS data available which goes back to 2015-04][4]. This git repository doesn't
+get used for Metrodroid because [shittypack][] removes stop IDs (rail uses `place_*` identifiers) and
+the repository itself is huge (~2 GiB for a complete copy).
+
+We interpolate reader IDs where possible. These are special successful cases:
+
+* 0x3dd - 0x3e2: Stop code 001079 doesn't exist.
+
+* 0x413 - 0x41f: Stop codes 001166 and 001173 don't exist.
+
+Reader IDs where interpolation was not attempted:
+
+* 0x1f2 - 0x266: Some stop IDs were skipped (128 stops vs. 116 reader IDs)
+
+* 0x266 - 0x31b: Some stop IDs were added (168 stops vs. 181 reader IDs)
+
+* 0x31b - 0x3cc: Some stop IDs were skipped (173 stops vs. 177 reader IDs)
+
+* 0x3cc - 0x3dd: A stop ID was added (16 stops vs. 17 reader IDs)
+
+* 0x3e2 - 0x3e7: Some stop IDs were added (4 stops vs. 5 reader IDs)
+
+* 0x3e7 - 0x405: Some stop IDs were added (24 stops vs. 30 reader IDs)
+
+* 0x405 - 0x410: Some stop IDs were skipped (13 stops vs. 11 reader IDs)
+
+* 0x979 - 0x9d5: Some stop IDs were added (85 stops vs. 92 reader IDs)
+
+* 0x9d5 - 0xbbb: Some stop IDs were skipped (520 stops vs. 486 reader IDs)
+
+* 0xbbb - 0xfa6: Some stop IDs were added (943 stops vs. 1003 reader IDs)
+
+[0]: https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq
+[1]: https://creativecommons.org/licenses/by/4.0/au/
+[2]: http://www.tmr.qld.gov.au
+[map16]: https://translink.com.au/sites/default/files/assets/resources/plan-your-journey/maps/160104-train-network-map.pdf
+[map18]: https://translink.com.au/sites/default/files/assets/resources/plan-your-journey/maps/180401-train-busway-ferry-tram-network-map.pdf
+[4]: https://bitbucket.org/micolous/queensland-gtfs/
+[goweb]: https://gocard.translink.com.au/
+[shittypack]: https://github.com/micolous/shittypack
