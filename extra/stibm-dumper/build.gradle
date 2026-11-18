@@ -1,0 +1,41 @@
+// Standalone helper app: dumps MIFARE Ultralight tickets to JSON files (Metrodroid-compatible)
+// for reverse-engineering. Not part of the Metrodroid build.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.12.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+android {
+    namespace 'io.github.luccoj.uldumper'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'io.github.luccoj.uldumper'
+        minSdk 21
+        targetSdk 36
+        versionCode 1
+        versionName '1.0'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
