@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * Layout observed so far (page numbers in decimal):
  *
+ *   0-1    UID; printed on the ticket as "01-" + UID bytes reversed, in decimal
  *   4      86 08 00 00   constant on every sample: used for detection
  *   5      00 00 00 00
  *   6-9    16 bytes, random-looking, differs per ticket (authenticator / signature?)
@@ -85,9 +86,11 @@ data class MilanUltralightRegion(
 @Parcelize
 data class MilanUltralightTransitData(
         val authenticator: ImmutableByteArray,
-        val regions: List<MilanUltralightRegion>
+        val regions: List<MilanUltralightRegion>,
+        private val serial: Long
 ) : TransitData() {
-    override val serialNumber: String? get() = null
+    /** Matches the number printed on the ticket (after its "01-" prefix). */
+    override val serialNumber: String get() = serial.toString()
 
     override val cardName get() = NAME
 
@@ -112,6 +115,7 @@ data class MilanUltralightTransitData(
         internal fun parse(card: UltralightCard): MilanUltralightTransitData {
             fun flag(page: Int) = card.getPage(page).data.byteArrayToInt()
             return MilanUltralightTransitData(
+                    serial = getSerial(card),
                     authenticator = card.readPages(6, 4),
                     regions = listOf(
                             MilanUltralightRegion("Record slot 1", 10, card.readPages(10, 7), null),
@@ -124,6 +128,10 @@ data class MilanUltralightTransitData(
     }
 }
 
+/** The 7-byte UID in reverse byte order, as decimal: this is what is printed on the ticket. */
+private fun getSerial(card: UltralightCard) =
+        (card.getPage(0).data.sliceOffLen(0, 3) + card.getPage(1).data).byteArrayToLongReversed()
+
 object MilanUltralightTransitFactory : UltralightCardTransitFactory {
     override fun check(card: UltralightCard): Boolean {
         if (card.pages.size < 36)
@@ -134,5 +142,5 @@ object MilanUltralightTransitFactory : UltralightCardTransitFactory {
 
     override fun parseTransitData(card: UltralightCard) = MilanUltralightTransitData.parse(card)
 
-    override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(NAME, null)
+    override fun parseTransitIdentity(card: UltralightCard) = TransitIdentity(NAME, getSerial(card).toString())
 }

@@ -1,0 +1,155 @@
+{
+    "tagId": "04c1c2c3c4c5c1",
+    "scannedAt": {
+        "timeInMillis": 1795108069082,
+        "tz": "Europe/Rome"
+    },
+    "mifareUltralight": {
+        "cardModel": "EV1_MF0UL21",
+        "pages": [
+            {
+                "data": "04c1c28f"
+            },
+            {
+                "data": "c3c4c5c1"
+            },
+            {
+                "data": "03480000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "86080000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "808c6a92"
+            },
+            {
+                "data": "ec24fa96"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "c41287a4"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "38071203"
+            },
+            {
+                "data": "e5d7e137"
+            },
+            {
+                "data": "bd6103d3"
+            },
+            {
+                "data": "f923ec02"
+            },
+            {
+                "data": "220e2000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "ac6cdc08"
+            },
+            {
+                "data": "a1582057"
+            },
+            {
+                "data": "d166fc41"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000001"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000001"
+            },
+            {
+                "data": "000000bd"
+            },
+            {
+                "data": "000000ff"
+            },
+            {
+                "data": "00050000"
+            },
+            {
+                "data": "00000000"
+            },
+            {
+                "data": "00000000"
+            }
+        ],
+        "cardRawModel": {
+            "versionCmd": "0004030101000e03"
+        }
+    },
+    "ulDumper": {
+        "app": "UL Dumper 1.0",
+        "localTime": "2026-11-19 18:07:49 GMT+01:00",
+        "note": "Before topping up at Tre Torri",
+        "counters": [
+            131071,
+            0,
+            1024
+        ],
+        "tearingFlags": [
+            null,
+            null,
+            null
+        ],
+        "signature": null,
+        "errors": []
+    }
+}

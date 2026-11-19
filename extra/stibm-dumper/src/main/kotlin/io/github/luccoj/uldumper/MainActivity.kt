@@ -100,11 +100,15 @@ class MainActivity : Activity(), NfcAdapter.ReaderCallback {
             val signature: ByteArray?,
             val errors: List<String>)
 
-    /** Sends a command; returns null on NAK or I/O error, after re-selecting the tag. */
-    private fun cmd(a: NfcA, vararg bytes: Int): ByteArray? {
+    /**
+     * Sends a command; returns null on NAK or I/O error, after re-selecting the tag.
+     * A NAK is a single 4-bit reply, so replies shorter than [minLen] bytes count as one.
+     */
+    private fun cmd(a: NfcA, vararg bytes: Int, minLen: Int = 2): ByteArray? {
         try {
             val r = a.transceive(ByteArray(bytes.size) { bytes[it].toByte() })
-            if (r != null && r.size > 1) return r
+            val isNak = r != null && r.size == 1 && (r[0].toInt() and 0xf0) == 0
+            if (r != null && r.size >= minLen && !isNak) return r
         } catch (_: IOException) {
         }
         // A NAK halts the tag: reconnect so that later commands still work.
@@ -163,7 +167,7 @@ class MainActivity : Activity(), NfcAdapter.ReaderCallback {
                     (it[0].toInt() and 0xff) or ((it[1].toInt() and 0xff) shl 8) or ((it[2].toInt() and 0xff) shl 16)
                 }
             }
-            val tearing = (0..2).map { i -> if (!isEv1) null else cmd(a, 0x3e, i)?.let { it[0].toInt() and 0xff } }
+            val tearing = (0..2).map { i -> if (!isEv1) null else cmd(a, 0x3e, i, minLen = 1)?.let { it[0].toInt() and 0xff } }
             val signature = cmd(a, 0x3c, 0x00)
             return Dump(tag.id, version, pages, counters, tearing, signature, errors)
         } finally {
@@ -182,7 +186,7 @@ class MainActivity : Activity(), NfcAdapter.ReaderCallback {
                 .put("pages", JSONArray(d.pages.map { JSONObject().put("data", it.hex()) }))
         if (d.version != null) mfu.put("cardRawModel", JSONObject().put("versionCmd", d.version.hex()))
         val extra = JSONObject()
-                .put("app", "UL Dumper 1.0")
+                .put("app", "UL Dumper 1.1")
                 .put("localTime", SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz", Locale.ROOT).format(Date(now)))
                 .put("note", noteText)
                 .put("counters", JSONArray(d.counters.map { it ?: JSONObject.NULL }))

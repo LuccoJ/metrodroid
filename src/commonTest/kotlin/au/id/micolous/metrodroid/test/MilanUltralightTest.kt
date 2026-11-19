@@ -60,6 +60,26 @@ class MilanUltralightTest : BaseInstrumentedTest() {
     }
 
     @Test
+    fun testTopUp() {
+        // Same ticket as "empty", read with UL Dumper just before and after a top-up at a machine.
+        // The extra "ulDumper" JSON object must not stop Metrodroid from importing the file.
+        val before = load("used_before_topup")
+        assertEquals(listOf(true, false, false, true), before.emptiness())
+        assertEquals(listOf(1, 1), before.regions.mapNotNull { it.flag })
+        // The new product goes into the other record slot; the old slot, both areas and both
+        // flags are cleared.
+        val after = load("used_after_topup")
+        assertEquals(listOf(false, true, true, true), after.emptiness())
+        assertEquals(listOf(0, 0), after.regions.mapNotNull { it.flag })
+    }
+
+    @Test
+    fun testSerialMatchesPrintedNumber() {
+        // Printed on the (real) ticket as "01-54542119393739012".
+        assertEquals("54542119393739012", load("empty").serialNumber)
+    }
+
+    @Test
     fun testSharedRecord() {
         // Two different tickets carry a byte-identical record: records are not keyed per card.
         val a = load("mi1m3_loaded").regions[1].data
