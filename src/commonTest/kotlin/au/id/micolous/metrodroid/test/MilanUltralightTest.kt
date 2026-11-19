@@ -38,16 +38,16 @@ class MilanUltralightTest : BaseInstrumentedTest() {
     private fun MilanUltralightTransitData.emptiness() = regions.map { it.isEmpty }
 
     @Test
-    fun testLoadedMi1Mi3() {
-        val d = load("mi1m3_loaded")
+    fun testLoadedA() {
+        val d = load("mi1mi3_loaded_a")
         // slot 1, slot 2, area A, area B
         assertEquals(listOf(false, false, true, false), d.emptiness())
         assertEquals(listOf(1, 0), d.regions.mapNotNull { it.flag })
     }
 
     @Test
-    fun testLoadedMiMi3() {
-        val d = load("mimi3_loaded")
+    fun testLoadedB() {
+        val d = load("mi1mi3_loaded_b")
         assertEquals(listOf(false, false, true, false), d.emptiness())
         assertEquals(listOf(0, 1), d.regions.mapNotNull { it.flag })
     }
@@ -82,8 +82,8 @@ class MilanUltralightTest : BaseInstrumentedTest() {
     @Test
     fun testSharedRecord() {
         // Two different tickets carry a byte-identical record: records are not keyed per card.
-        val a = load("mi1m3_loaded").regions[1].data
-        val b = load("mimi3_loaded").regions[0].data
+        val a = load("mi1mi3_loaded_a").regions[1].data
+        val b = load("mi1mi3_loaded_b").regions[0].data
         assertEquals(a, b)
     }
 }
